@@ -1,17 +1,18 @@
 import js from '@eslint/js';
 import globals from 'globals';
-import { defineConfig } from 'eslint/config';
+import tseslint from 'typescript-eslint';
 import eslintPluginUnicorn from 'eslint-plugin-unicorn';
 
-export default defineConfig([
+export default tseslint.config(
+    js.configs.recommended,
+    ...tseslint.configs.recommended,
     {
-        files: ['**/*.{js,mjs,cjs}'],
-        plugins: { js, unicorn: eslintPluginUnicorn },
-        extends: ['js/recommended'],
-        languageOptions: { 
-            ecmaVersion: "latest",
-			sourceType: "module",
-            globals: globals.browser 
+        files: ['**/*.{js,mjs,cjs,ts}'],
+        plugins: { unicorn: eslintPluginUnicorn },
+        languageOptions: {
+            ecmaVersion: 'latest',
+            sourceType: 'module',
+            globals: globals.node
         },
         rules: {
             // eslint base rules
@@ -31,5 +32,5 @@ export default defineConfig([
             'unicorn/no-lonely-if': 'error',
             'unicorn/prefer-ternary': 'error',
         },
-    },
-]);
+    }
+);
